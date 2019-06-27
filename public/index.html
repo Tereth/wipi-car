@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/car.css">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    </head>
+    <body>
+    <div class="keys">
+        <h1 class="header">Wifi Pi Car!</h1>
+        <br/>
+        <div class="up arr" id="left-fwd">
+            <i class="fa fa-arrow-up rot-ccw" ></i>
+        </div>
+        <div class="up arr" id="fwd">
+            <i class="fa fa-arrow-up" ></i>
+        </div>
+        <div class="up arr" id="right-fwd">
+            <i class="fa fa-arrow-up rot-cw" ></i>
+        </div>
+        <br />
+        <div class="left arr" id="left">
+            <i class="fa fa-arrow-left" ></i>
+        </div>
+        <div class="arr">
+            <i class="fa"></i>
+        </div>
+        <div class="right arr" id="right">
+            <i class="fa fa-arrow-right" ></i>
+        </div>
+        <br/>
+        <div class="down arr" id="left-rev">
+            <i class="fa fa-arrow-down rot-cw" ></i>
+        </div>
+        <div class="down arr" id="rev">
+            <i class="fa fa-arrow-down" ></i>
+        </div>
+        <div class="down arr" id="right-rev">
+            <i class="fa fa-arrow-down rot-ccw" ></i>
+        </div>
+    </div>
+    </body>
+
+
+    <!--
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+    -->
+    <script src="scripts/jquery-3.3.1.slim.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="scripts/popper.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="scripts/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="scripts/socket.io.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+
+        var socket = io();
+
+        function key_toggle(e, data) {
+            var key = e.keyCode ? e.keyCode : e.which;
+            //38 up
+            //40 down
+            //37 left
+            //39 right
+            //console.log(key);
+            if(38 == key) {
+                socket.emit("fwd", data);
+            }else if(40 == key) {
+                socket.emit("rev", data);
+            }else if(37 == key) {
+                socket.emit("left", data);
+            }else if(39 == key) {
+                socket.emit("right", data);
+            }
+        }
+
+        function add_button_events(elementId, eventNames) {
+            var element = document.getElementById(elementId); 
+            //console.log(element);
+
+            element.addEventListener("mousedown", function() { //add event listener for when checkbox changes
+                console.log(elementId + " pressed");
+                eventNames.forEach((eventId) => {
+                    socket.emit(eventId, 1);
+                });
+            });
+            element.addEventListener("mouseup", function() { //add event listener for when checkbox changes
+                console.log(elementId + " released");
+                eventNames.forEach((eventId) => {
+                    socket.emit(eventId, 0);
+                });
+            });
+            element.addEventListener("mouseleave", function() { //add event listener for when checkbox changes
+                console.log(elementId + " released");
+                eventNames.forEach((eventId) => {
+                    socket.emit(eventId, 0);
+                });
+            });
+            element.addEventListener("mouseenter", function() { //add event listener for when checkbox changes
+                if(0) {
+                    console.log(elementId + " pressed");
+                    eventNames.forEach((eventId) => {
+                        socket.emit(eventId, 1);
+                    });
+                }
+            });
+            element.addEventListener("touchstart", function() { //add event listener for when checkbox changes
+                console.log(elementId + " start");
+                eventNames.forEach((eventId) => {
+                    socket.emit(eventId, 1);
+                });
+            });
+            element.addEventListener("touchend", function() { //add event listener for when checkbox changes
+                console.log(elementId + " end");
+                eventNames.forEach((eventId) => {
+                    socket.emit(eventId, 0);
+                });
+            });
+
+        }
+
+        window.addEventListener("load", function(){ //when page loads
+            add_button_events("fwd", ["fwd"]);
+            add_button_events("rev", ["rev"]);
+            add_button_events("left", ["left"]);
+            add_button_events("right", ["right"]);
+            add_button_events("left-fwd", ["fwd", "left"]);
+            add_button_events("left-rev", ["rev", "left"]);
+            add_button_events("right-fwd", ["fwd", "right"]);
+            add_button_events("right-rev", ["rev", "right"]);
+        });
+
+        window.addEventListener("beforeunload", function() {
+            socket.emit("fwd", 0); //send button status to server (as 1 or 0)
+            socket.emit("rev", 0); //send button status to server (as 1 or 0)
+            socket.emit("left", 0); //send button status to server (as 1 or 0)
+            socket.emit("right", 0); //send button status to server (as 1 or 0)
+        });
+
+        window.onkeydown = function(e) {
+            key_toggle(e, 1);
+        }
+
+        window.onkeyup = function(e) {
+            key_toggle(e, 0);
+        }
+    </script>
+</html>
