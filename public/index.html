@@ -8,11 +8,14 @@
     <body>
     <div class="keys">
         <h1 class="header">Wifi Pi Car!</h1>
+        <video id="video" src="http://localhost:8081" autoplay="autoplay" width="704" height="480"></video>
+        <br/>
         <br/>
         <div class="up arr" id="left-fwd">
             <i class="fa fa-arrow-up rot-ccw" ></i>
         </div>
         <div class="up arr" id="fwd">
+            <input type="checkbox" id="fwd_light">
             <i class="fa fa-arrow-up" ></i>
         </div>
         <div class="up arr" id="right-fwd">
@@ -20,6 +23,7 @@
         </div>
         <br />
         <div class="left arr" id="left">
+            <input type="checkbox" id="left_light">
             <i class="fa fa-arrow-left" ></i>
         </div>
         <div class="arr">
@@ -27,12 +31,14 @@
         </div>
         <div class="right arr" id="right">
             <i class="fa fa-arrow-right" ></i>
+            <input type="checkbox" id="right_light">
         </div>
         <br/>
         <div class="down arr" id="left-rev">
             <i class="fa fa-arrow-down rot-cw" ></i>
         </div>
         <div class="down arr" id="rev">
+            <input type="checkbox" id="rev_light">
             <i class="fa fa-arrow-down" ></i>
         </div>
         <div class="down arr" id="right-rev">
@@ -141,5 +147,18 @@
         window.onkeyup = function(e) {
             key_toggle(e, 0);
         }
+
+        socket.on('rev_sim', function(data) {
+            document.getElementById("rev_light").checked = data;
+        });
+        socket.on('fwd_sim', function(data) {
+            document.getElementById("fwd_light").checked = data;
+        });
+        socket.on('left_sim', function(data) {
+            document.getElementById("left_light").checked = data;
+        });
+        socket.on('right_sim', function(data) {
+            document.getElementById("right_light").checked = data;
+        });
     </script>
 </html>
