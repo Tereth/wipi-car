@@ -10,7 +10,7 @@ This project is for a RC car controlled by a Raspberry Pi.  The Pi controls the 
   * `node webserver.js`
 * If automatic headless start is desired install supervisor (configuration provided)
   * `apt-get install supervisor`
-  * Copy pi_cam.conf file to `/etc/supervisor/conf.d/pi_cam.conf`
+  * Copy [pi_cam.conf](https://github.com/Tereth/wipi-car/blob/main/config/pi_cam.conf) file to `/etc/supervisor/conf.d/pi_cam.conf`
   * Enable supervisor in systemctl `systemctl enable supervisor` (if the services need restarted for whatever reason `supervisorctl restart all`)
 
 ## Camera Setup
