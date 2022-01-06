@@ -27,7 +27,7 @@ NOTE: As of Dec 27, 2021, the ov5647 driver is broken and will not flip/rotate i
 ## Wiring Diagram
 Depending on the controller this is wired to it is recommended to have something between a 300-1k Ohm resistor inline with the control lines.
 
-![wiring-diagram](https://user-images.githubusercontent.com/1870213/148320332-2a902663-adc6-47c3-b883-dd57f5b33c61.png)
+![wiring-diagram](assets/wiring-diagram.png)
 
 # TODO
 - [ ] Reduce video latency
