@@ -29,6 +29,13 @@ Depending on the controller this is wired to it is recommended to have something
 
 ![wiring-diagram](assets/wiring-diagram.png)
 
+| Pin | GPIO   | Function |
+| --- | ------ | -------- |
+| 7   | GPIO4  | FORWARD  |
+| 11  | GPIO17 | RIGHT    |
+| 13  | GPIO27 | LEFT     |
+| 15  | GPIO22 | REVERSE  |
+
 # TODO
 - [ ] Reduce video latency
 - [ ] Add object recognition
